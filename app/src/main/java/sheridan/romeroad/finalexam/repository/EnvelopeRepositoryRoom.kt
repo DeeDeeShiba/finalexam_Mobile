@@ -1,6 +1,9 @@
 package sheridan.romeroad.finalexam.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
+import sheridan.romeroad.finalexam.database.EnvelopeDao
+import sheridan.romeroad.finalexam.database.EnvelopeEntity
 import sheridan.romeroad.finalexam.domain.Envelope
 import javax.inject.Inject
 
@@ -27,13 +30,13 @@ class EnvelopeRepositoryRoom @Inject constructor (
     }
 
     override suspend fun delete(envelope: Envelope){
-        if(envelope.id is String){
-            envelopeDao.delete(envelope.id.toLong())
+        if(envelope.name is String){
+            envelopeDao.delete(envelope.name.toLong())
         }
     }
 
-    override suspend fun delete(id: String){
-        envelopeDao.delete(id.toLong())
+    override suspend fun delete(name: String){
+        envelopeDao.delete(name.toLong())
     }
 
     override suspend fun deleteAll(){
@@ -42,7 +45,7 @@ class EnvelopeRepositoryRoom @Inject constructor (
 }
 
 fun Envelope.toEntity(): EnvelopeEntity {
-    return EnvelopeEntity(id?.toLong() ?: 0L, isUrgent, catMessage, date)
+    return EnvelopeEntity(name?.toLong() ?: 0L, petType, age, isVax)
 }
 
 fun EnvelopeEntity.toEnvelope(): Envelope {
