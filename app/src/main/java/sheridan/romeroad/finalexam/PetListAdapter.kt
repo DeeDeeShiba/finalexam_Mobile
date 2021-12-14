@@ -40,7 +40,7 @@ class PetListAdapter(
         }
         class EnvelopeDiffCallback : DiffUtil.ItemCallback<Envelope>() {
             override fun areItemsTheSame(oldItem: Envelope, newItem: Envelope): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem.name == newItem.name
             }
 
             override fun areContentsTheSame(oldItem: Envelope, newItem: Envelope): Boolean {

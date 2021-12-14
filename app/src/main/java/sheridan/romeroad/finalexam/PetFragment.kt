@@ -43,7 +43,26 @@ class PetFragment : Fragment() {
         navController = findNavController()
         //return inflater.inflate(R.layout.pet_fragment, container, false)
 
-        val adapter = //TODO
+        val adapter = PetListAdapter(
+            onClick = { envelope ->
+                navController.navigate(
+                    PetFragmentDirections.actionPetToOutput(envelopeId = envelope.id!!)
+                )
+            },
+            onDelete = { envelope ->
+                if(settings.confirmDelete){
+                    val action = PetFragmentDirections.actionHistoryToConfirmation(
+                        requestKey = CONFIRM_DELETE_ITEM,
+                        title = getString(R.string.app_name),
+                        message = getString(R.string.confirm_delete_message),
+                        itemId = envelope.id
+                    )
+                    navController.navigate(action)
+                }else{
+                    viewModel.delete(envelope)
+                }
+            }
+        )
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
